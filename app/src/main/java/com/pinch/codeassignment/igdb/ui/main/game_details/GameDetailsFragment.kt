@@ -69,15 +69,18 @@ class GameDetailsFragment : BaseBindingFragment<FragmentGameDetailsBinding>() {
     private fun initGenresView() {
         val genresBuilder = StringBuilder()
         game.genres?.map { genre ->
-            genresBuilder.append(genre).append(", ")
+            genresBuilder.append(genre)
+            if (game.genres?.indexOf(genre) != game.genres?.size?.minus(1)) genresBuilder.append(", ")
         }
+
         binding.txtGameGenreDetails.text = getString(R.string.genres).plus(genresBuilder.toString())
     }
 
     private fun initPlatformsView() {
         val platformsBuilder = StringBuilder()
-        game.platforms?.map { genre ->
-            platformsBuilder.append(genre).append(", ")
+        game.platforms?.map { platform ->
+            platformsBuilder.append(platform)
+            if (game.platforms?.indexOf(platform) != game.platforms?.size?.minus(1)) platformsBuilder.append(", ")
         }
         binding.txtGamePlatformsDetails.text =
             getString(R.string.platforms).plus(platformsBuilder.toString())
