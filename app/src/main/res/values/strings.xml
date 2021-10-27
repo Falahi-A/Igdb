@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">IGDB</string>
+    <string name="reload">Reload</string>
+    <string name="line_dots">…</string>
+    <string name="genres">"Genres : "</string>
+    <string name="platforms">"Platforms : "</string>
+    <string name="followers">"Followers : "</string>
+</resources>

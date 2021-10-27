@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.game_details.GameDetailsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/slider_game_screenshots_details"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_centerInParent="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:sliderAnimationDuration="600"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderIndicatorAnimationDuration="600"
+            app:sliderIndicatorEnabled="true"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="#5A5A5A"
+            app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderScrollTimeInSec="1" />
+
+        <!--it's for presenting an image in case of no screenshots -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_holder_details"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_centerInParent="true"
+            android:background="@color/purple_200"
+            android:src="@drawable/ic_game_controller"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView_game_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_4dp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/slider_game_screenshots_details"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/slider_game_screenshots_details">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_game_details"
+                android:layout_width="100dp"
+                android:scaleType="centerCrop"
+                android:layout_height="134dp" />
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_gameName_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_2dp"
+            android:layout_marginEnd="@dimen/margin_2dp"
+            android:gravity="start"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_14sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardView_game_details"
+            app:layout_constraintBottom_toTopOf="@+id/txt_gameGenre_details"
+            app:layout_constraintTop_toBottomOf="@+id/slider_game_screenshots_details" />
+
+
+
+
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_gameGenre_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_2dp"
+            android:layout_marginEnd="@dimen/margin_2dp"
+            android:gravity="start"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardView_game_details"
+            app:layout_constraintTop_toBottomOf="@+id/txt_gameName_details"
+            app:layout_constraintBottom_toTopOf="@+id/txt_gamePlatforms_details"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_gamePlatforms_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_2dp"
+            android:layout_marginEnd="@dimen/margin_2dp"
+            android:gravity="start"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardView_game_details"
+            app:layout_constraintTop_toBottomOf="@+id/txt_gameGenre_details"
+            app:layout_constraintBottom_toTopOf="@+id/txt_gameSummary_details"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_gameFollowers_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_2dp"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintTop_toBottomOf="@+id/cardView_game_details"
+            app:layout_constraintEnd_toEndOf="@+id/cardView_game_details"
+            app:layout_constraintStart_toStartOf="@+id/cardView_game_details"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_gameSummary_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="fill_horizontal"
+            android:textColor="@color/black"
+            android:layout_margin="@dimen/margin_8dp"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_gameFollowers_details" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

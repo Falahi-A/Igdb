@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/gamesListFragment">
+
+    <fragment
+        android:id="@+id/gamesListFragment"
+        android:name="com.pinch.codeassignment.igdb.ui.main.games.GamesListFragment"
+        android:label="Games"
+        tools:layout="@layout/fragment_games_list">
+        <action
+            android:id="@+id/action_gamesListFragment_to_gameDetailsFragment"
+            app:destination="@id/gameDetailsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/gameDetailsFragment"
+        android:name="com.pinch.codeassignment.igdb.ui.main.game_details.GameDetailsFragment"
+        android:label="Detail"
+        tools:layout="@layout/fragment_game_details">
+        <argument
+            android:name="game"
+            app:argType="com.pinch.codeassignment.igdb.domain.model.Game" />
+        <action
+            android:id="@+id/action_gameDetailsFragment_to_gamesListFragment"
+            app:destination="@id/gamesListFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+
+
+    </fragment>
+
+</navigation>
