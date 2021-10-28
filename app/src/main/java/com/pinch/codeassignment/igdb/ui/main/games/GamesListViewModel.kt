@@ -18,7 +18,7 @@ class GamesListViewModel @Inject constructor(private val getGamesUseCase: GetGam
     private val _games = MutableLiveData<GamesListViewState>()
     val games: LiveData<GamesListViewState> = _games
 
-    fun getGames() = getGamesUseCase().onEach { result ->
+    fun getGames(isNetworkAvailable: Boolean) = getGamesUseCase(isNetworkAvailable).onEach { result ->
 
         when (result) {
             is Resource.Loading -> {
@@ -29,7 +29,10 @@ class GamesListViewModel @Inject constructor(private val getGamesUseCase: GetGam
             }
             is Resource.Error -> {
                 _games.value =
-                    GamesListViewState(error = result.message ?: "An unexpected error happened")
+                    GamesListViewState(
+                        gamesList = result.data ?: emptyList(),
+                        error = result.message ?: "An unexpected error happened"
+                    )
             }
         }
 

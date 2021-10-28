@@ -1,8 +1,9 @@
 package com.pinch.codeassignment.igdb.di
 
 import android.content.Context
+
 import androidx.room.Room
-import androidx.room.RoomDatabase
+import com.pinch.codeassignment.igdb.data.db.GamesDao
 import com.pinch.codeassignment.igdb.data.db.GamesDb
 import com.pinch.codeassignment.igdb.data.network.IgNetApi
 import com.pinch.codeassignment.igdb.data.repository.IgRepository
@@ -22,9 +23,9 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 
-@InstallIn(SingletonComponent::class)
 @Module
-class AppModule {
+@InstallIn(SingletonComponent::class)
+object AppModule {
 
 
     @Singleton
@@ -42,7 +43,7 @@ class AppModule {
         val requestBuilder = originalRequest.newBuilder()
             .addHeader(Constants.AUTHORIZATION_KEY, Constants.AUTHORIZATION)
             .addHeader(Constants.CLIENT_ID_KEY, Constants.CLIENT_ID)
-            .addHeader(Constants.ACCEPT_KEY,Constants.ACCEPT)
+            .addHeader(Constants.ACCEPT_KEY, Constants.ACCEPT)
             .build()
         interceptor.proceed(requestBuilder)
     }.build()
@@ -55,13 +56,17 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(igNetApi: IgNetApi): IgRepository = IgRepositoryImpl(igNetApi)
+    fun provideRepository(igNetApi: IgNetApi, gamesDao: GamesDao): IgRepository =
+        IgRepositoryImpl(igNetApi, gamesDao)
 
     @Singleton
     @Provides
-    fun provideGamesDb(@ApplicationContext context: Context): RoomDatabase =
+    fun provideGamesDb(@ApplicationContext context: Context) =
         Room.databaseBuilder(context, GamesDb::class.java, Constants.DATABASE_NAME).build()
 
+    @Singleton
+    @Provides
+    fun provideGamesDao(db: GamesDb) = db.getGamesDao()
 
     @Named(Constants.IO_DISPATCHER)
     @Singleton
@@ -72,5 +77,6 @@ class AppModule {
     @Singleton
     @Provides
     fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
+
 
 }

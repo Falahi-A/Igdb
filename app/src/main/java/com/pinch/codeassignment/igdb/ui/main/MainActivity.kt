@@ -17,7 +17,7 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     override fun initView() {
 
 
-         navHostFragment =
+        navHostFragment =
             supportFragmentManager.findFragmentById(binding.fragment.id) as NavHostFragment
 
 

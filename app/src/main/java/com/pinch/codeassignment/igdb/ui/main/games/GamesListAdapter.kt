@@ -9,7 +9,6 @@ import com.pinch.codeassignment.igdb.databinding.ItemGamesListViewBinding
 import com.pinch.codeassignment.igdb.domain.model.Game
 import com.pinch.codeassignment.igdb.ui.base.BaseViewHolder
 import com.pinch.codeassignment.igdb.utils.Constants
-import com.pinch.codeassignment.igdb.utils.buildImageUrl
 import com.pinch.codeassignment.igdb.utils.loadImage
 
 class GamesListAdapter(val onItemClick: (Game) -> Unit) :
@@ -37,20 +36,15 @@ class GamesListAdapter(val onItemClick: (Game) -> Unit) :
         override fun onBind(obj: Game) {
 
             checkTextName(obj)
-            obj.rating?.let {
-                item.txtRatingItem.text = obj.rating.toString().substringBefore(".").plus("%")
-            }
 
-            obj.genres?.let {
-                item.txtGenreItem.text = it.first()
-            }
+                item.txtRatingItem.text = obj.rating.toString().substringBefore(".").plus("%")
+
+                if ( obj.genres.isNotEmpty()) item.txtGenreItem.text =  obj.genres.first()
+
 
             loadImage(
                 item.imgGameItem,
-                buildImageUrl(
-                    imageSize = Constants.IMAGE_COVER_SMALL_2X_SIZE,
-                    imageId = obj.imageId
-                )
+                obj.imageUrl
             )
             item.root.setOnClickListener {
                 onItemClick(obj)

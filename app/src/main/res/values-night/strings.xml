@@ -5,4 +5,6 @@
     <string name="genres">"Genres : "</string>
     <string name="platforms">"Platforms : "</string>
     <string name="followers">"Followers : "</string>
+    <string name="rating">"Rating :  "</string>
+    <string name="totalRating">"Total Rating : "</string>
 </resources>

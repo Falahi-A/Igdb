@@ -9,8 +9,6 @@ import com.pinch.codeassignment.igdb.R
 import com.pinch.codeassignment.igdb.databinding.FragmentGameDetailsBinding
 import com.pinch.codeassignment.igdb.domain.model.Game
 import com.pinch.codeassignment.igdb.ui.base.BaseBindingFragment
-import com.pinch.codeassignment.igdb.utils.Constants
-import com.pinch.codeassignment.igdb.utils.buildImageUrl
 import com.pinch.codeassignment.igdb.utils.loadImage
 import com.smarteist.autoimageslider.SliderView
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,17 +44,21 @@ class GameDetailsFragment : BaseBindingFragment<FragmentGameDetailsBinding>() {
                 // init game's image
                 loadImage(
                     imgGameDetails,
-                    buildImageUrl(
-                        imageSize = Constants.IMAGE_COVER_SMALL_2X_SIZE,
-                        imageId = imageId
-                    )
+                    imageUrl
                 )
                 // set name of game
                 txtGameNameDetails.text = name
                 //set followers of game
-                txtGameFollowersDetails.text = getString(R.string.followers).plus(game.follows ?: 0)
+                txtGameFollowersDetails.text = getString(R.string.followers).plus(game.follows)
                 // set summary of game
-                txtGameSummaryDetails.text = summary ?: ""
+                txtGameSummaryDetails.text = summary
+
+                // rating
+                txtRatingDetails.text =
+                    getString(R.string.rating).plus(game.rating.toString().substringBefore("."))
+                        .plus("%")
+                //rating counts
+                txtTotalRatingDetails.text = getString(R.string.totalRating).plus(game.ratingCount.toString())
             }
 
         }
@@ -68,9 +70,9 @@ class GameDetailsFragment : BaseBindingFragment<FragmentGameDetailsBinding>() {
 
     private fun initGenresView() {
         val genresBuilder = StringBuilder()
-        game.genres?.map { genre ->
+        game.genres.map { genre ->
             genresBuilder.append(genre)
-            if (game.genres?.indexOf(genre) != game.genres?.size?.minus(1)) genresBuilder.append(", ")
+            if (game.genres.indexOf(genre) != game.genres.size.minus(1)) genresBuilder.append(", ")
         }
 
         binding.txtGameGenreDetails.text = getString(R.string.genres).plus(genresBuilder.toString())
@@ -78,9 +80,11 @@ class GameDetailsFragment : BaseBindingFragment<FragmentGameDetailsBinding>() {
 
     private fun initPlatformsView() {
         val platformsBuilder = StringBuilder()
-        game.platforms?.map { platform ->
+        game.platforms.map { platform ->
             platformsBuilder.append(platform)
-            if (game.platforms?.indexOf(platform) != game.platforms?.size?.minus(1)) platformsBuilder.append(", ")
+            if (game.platforms.indexOf(platform) != game.platforms.size.minus(1)) platformsBuilder.append(
+                ", "
+            )
         }
         binding.txtGamePlatformsDetails.text =
             getString(R.string.platforms).plus(platformsBuilder.toString())
@@ -92,21 +96,14 @@ class GameDetailsFragment : BaseBindingFragment<FragmentGameDetailsBinding>() {
 
         game.apply {
             binding.apply {
-                if (screenshots != null) {
+                if (screenshots.isNotEmpty()) {
                     binding.imgHolderDetails.visibility = View.GONE
-                    screenshots.map { imgScreenshotId -> // building screenshot urls
-                        buildImageUrl(
-                            imageSize = Constants.IMAGE_SCREENSHOT_BIG_SIZE,
-                            imageId = imgScreenshotId
-                        )
-                    }.also { screenshotsUrls ->
-                        sliderGameScreenshotsDetails.apply {  // initialising sliderView
-                            autoCycleDirection = SliderView.LAYOUT_DIRECTION_LTR
-                            setSliderAdapter(SliderAdapter(screenshotsUrls))
-                            scrollTimeInSec = 3
-                            isAutoCycle = true
-                            startAutoCycle()
-                        }
+                    sliderGameScreenshotsDetails.apply {  // initialising sliderView
+                        autoCycleDirection = SliderView.LAYOUT_DIRECTION_LTR
+                        setSliderAdapter(SliderAdapter(screenshots))
+                        scrollTimeInSec = 3
+                        isAutoCycle = true
+                        startAutoCycle()
                     }
                 } else {
                     imgHolderDetails.visibility =

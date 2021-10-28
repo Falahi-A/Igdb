@@ -30,7 +30,7 @@ class SliderAdapter(sliderDataArrayList: List<String>) :
     override fun onBindViewHolder(viewHolder: SliderAdapterViewHolder, position: Int) {
         val sliderItem: String = mSliderItems[position]
 
-        loadImage(viewHolder.imageViewBackground,sliderItem)
+        loadImage(viewHolder.imageViewBackground, sliderItem)
 
     }
 
@@ -44,7 +44,7 @@ class SliderAdapter(sliderDataArrayList: List<String>) :
         ViewHolder(itemView.root) {
         // Adapter class for initializing
         // the image of our slider view.
-         val imageViewBackground: AppCompatImageView = itemView.imgSliderScreenshotItem
+        val imageViewBackground: AppCompatImageView = itemView.imgSliderScreenshotItem
 
 
     }

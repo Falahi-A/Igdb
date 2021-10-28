@@ -6,7 +6,8 @@ object Constants {
      * Base on your need these fields can be changed. For more info you can visit [https://api-docs.igdb.com/#fields]
      * @see 'cover.image_id': image_id is an expander for cover property. for more information you can refer to https://api-docs.igdb.com/#expander
      */
-    const val GAMES_FIELDS = "name,summary,follows,rating,rating_count,cover.image_id,screenshots.image_id,release_dates.human,platforms.name,genres.name"
+    const val GAMES_FIELDS =
+        "name,summary,follows,rating,rating_count,cover.image_id,screenshots.image_id,platforms.name,genres.name"
 
     const val BASE_URL = "https://api.igdb.com/v4/"
 
@@ -21,6 +22,7 @@ object Constants {
 
     const val IO_DISPATCHER = "io_dispatcher"
     const val MAIN_DISPATCHER = "main_dispatcher"
+    const val IS_ONLINE = "is_online"
 
     const val IMAGE_COVER_SMALL_2X_SIZE =
         "cover_small_2x" // Base on your need it can be changed. for more info check this link [https://api-docs.igdb.com/#images]

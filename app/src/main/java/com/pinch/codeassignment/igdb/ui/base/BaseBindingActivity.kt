@@ -1,11 +1,15 @@
 package com.pinch.codeassignment.igdb.ui.base
 
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.snackbar.Snackbar
 import com.pinch.codeassignment.igdb.databinding.ActivityBaseBinding
 
 /**
@@ -63,24 +67,38 @@ abstract class BaseBindingActivity<VB : ViewBinding> : AppCompatActivity() {
     abstract fun initView()
 
 
-
     fun displayProgress(isDisplayed: Boolean) {
         baseViewBinding.progressBarBase.visibility = if (isDisplayed) View.VISIBLE else View.GONE
     }
 
-
-    fun displayCustomErrorView(isDisplayed: Boolean) {
-        baseViewBinding.customErrorView.visibility = if (isDisplayed) View.VISIBLE else View.GONE
-    }
-
-    fun getCustomErrorView() =
-        baseViewBinding.customErrorView
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
 
+    fun displayMessage(message: String) {
+        Snackbar.make(baseViewBinding.root, message, Snackbar.LENGTH_LONG).show()
+    }
 
 
+    fun isNetworkAvailable(): Boolean {
+        val connectivityManager =
+            getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val nw = connectivityManager.activeNetwork ?: return false
+            val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+            return when {
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                //for other device how are able to connect with Ethernet
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                //for check internet over Bluetooth
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
+                else -> false
+            }
+        } else {
+            return connectivityManager.activeNetworkInfo?.isConnectedOrConnecting ?: false
+        }
+    }
 }

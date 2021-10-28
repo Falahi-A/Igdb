@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -60,8 +59,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_game_details"
                 android:layout_width="100dp"
-                android:scaleType="centerCrop"
-                android:layout_height="134dp" />
+                android:layout_height="134dp"
+                android:scaleType="centerCrop" />
         </androidx.cardview.widget.CardView>
 
 
@@ -77,13 +76,33 @@
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView_game_details"
-            app:layout_constraintBottom_toTopOf="@+id/txt_gameGenre_details"
             app:layout_constraintTop_toBottomOf="@+id/slider_game_screenshots_details" />
 
 
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_rating_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_2dp"
+            android:layout_marginEnd="@dimen/margin_2dp"
+            android:gravity="start"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintEnd_toStartOf="@+id/txt_totalRating_details"
+            app:layout_constraintStart_toEndOf="@+id/cardView_game_details"
+            app:layout_constraintTop_toBottomOf="@+id/txt_gameName_details" />
 
-
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_totalRating_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_2dp"
+            android:layout_marginEnd="@dimen/margin_2dp"
+            android:gravity="start"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_rating_details"
+            app:layout_constraintTop_toBottomOf="@+id/txt_gameName_details" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_gameGenre_details"
@@ -95,8 +114,7 @@
             android:textSize="@dimen/text_size_12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView_game_details"
-            app:layout_constraintTop_toBottomOf="@+id/txt_gameName_details"
-            app:layout_constraintBottom_toTopOf="@+id/txt_gamePlatforms_details"/>
+            app:layout_constraintTop_toBottomOf="@+id/txt_totalRating_details" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_gamePlatforms_details"
@@ -108,8 +126,7 @@
             android:textSize="@dimen/text_size_12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView_game_details"
-            app:layout_constraintTop_toBottomOf="@+id/txt_gameGenre_details"
-            app:layout_constraintBottom_toTopOf="@+id/txt_gameSummary_details"/>
+            app:layout_constraintTop_toBottomOf="@+id/txt_gameGenre_details" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_gameFollowers_details"
@@ -118,25 +135,22 @@
             android:layout_margin="@dimen/margin_2dp"
             android:gravity="center"
             android:textSize="@dimen/text_size_12sp"
-            app:layout_constraintTop_toBottomOf="@+id/cardView_game_details"
             app:layout_constraintEnd_toEndOf="@+id/cardView_game_details"
             app:layout_constraintStart_toStartOf="@+id/cardView_game_details"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/cardView_game_details" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_gameSummary_details"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_8dp"
             android:gravity="fill_horizontal"
             android:textColor="@color/black"
-            android:layout_margin="@dimen/margin_8dp"
             android:textSize="@dimen/text_size_12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_gameFollowers_details" />
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

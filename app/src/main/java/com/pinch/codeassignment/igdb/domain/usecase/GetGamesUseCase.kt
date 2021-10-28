@@ -1,47 +1,49 @@
 package com.pinch.codeassignment.igdb.domain.usecase
 
-import com.pinch.codeassignment.igdb.data.model.toGame
+import androidx.room.withTransaction
+import com.pinch.codeassignment.igdb.data.db.GamesDb
+import com.pinch.codeassignment.igdb.data.db.toGame
+import com.pinch.codeassignment.igdb.data.model.toGameEntity
 import com.pinch.codeassignment.igdb.data.repository.IgRepository
-import com.pinch.codeassignment.igdb.domain.model.Game
 import com.pinch.codeassignment.igdb.utils.Constants
-import com.pinch.codeassignment.igdb.utils.Resource
+import com.pinch.codeassignment.igdb.utils.networkBoundResource
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import retrofit2.HttpException
-import java.io.IOException
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Named
 
 
 class GetGamesUseCase @Inject constructor(
     private val igRepository: IgRepository,
+    private val gamesDb: GamesDb,
     @Named(Constants.IO_DISPATCHER) private val dispatcher: CoroutineDispatcher
 ) {
 
 
-    operator fun invoke() = flow<Resource<List<Game>>> {
-        try {
-            emit(Resource.Loading())
-            val games = igRepository.getGames(Constants.GAMES_FIELDS)
-            emit(Resource.Success(games.map { gameNetResponse ->
-                gameNetResponse.toGame()
-            }))
-        } catch (ioException: IOException) { // it's for handling internet issues
-            emit(
-                Resource.Error(
-                    message = ioException.localizedMessage
-                        ?: "couldn't reach server, check your internet please"
-                )
-            )
-        } catch (httpException: HttpException) { // it's for handling either server or local issues
-            emit(
-                Resource.Error(
-                    message = httpException.localizedMessage ?: "an unexpected error occurred"
-                )
-            )
-        }
+    operator fun invoke(
+        isNetworkAvailable: Boolean
+    ) = networkBoundResource(query = {
+        igRepository.getGamesDb().map {
+            it.map { gameEntity ->
+                gameEntity.toGame()
 
-    }.flowOn(dispatcher)
+            }
+        }
+    }, fetch = {
+        igRepository.getGames(Constants.GAMES_FIELDS)
+    }, saveFetchedResult = { gamesResponse ->
+        gamesDb.withTransaction {
+            igRepository.deleteGamesDb()
+            igRepository.insertGamesDb(gamesResponse.map { gameNetResponse ->
+                gameNetResponse.toGameEntity()
+
+            })
+        }
+    }, shouldFetch = { hasItem ->
+        isNetworkAvailable || !hasItem
+    }, hasItem = {
+        igRepository.hasItemDb()
+    }).flowOn(dispatcher)
 
 }
