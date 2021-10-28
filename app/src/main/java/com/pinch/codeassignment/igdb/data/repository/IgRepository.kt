@@ -12,8 +12,6 @@ interface IgRepository {
 
     suspend fun deleteGamesDb()
 
-    suspend fun hasItemDb(): Boolean
-
     fun getGamesDb(): Flow<List<GameEntity>>
 
 

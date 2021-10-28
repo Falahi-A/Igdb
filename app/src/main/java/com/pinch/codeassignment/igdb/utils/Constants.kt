@@ -25,7 +25,7 @@ object Constants {
     const val IS_ONLINE = "is_online"
 
     const val IMAGE_COVER_SMALL_2X_SIZE =
-        "cover_small_2x" // Base on your need it can be changed. for more info check this link [https://api-docs.igdb.com/#images]
+        "cover_small_2x"
     const val IMAGE_SCREENSHOT_BIG_SIZE =
         "screenshot_big"
     const val IMAGE_FORMAT = ".jpg"

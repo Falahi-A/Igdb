@@ -18,7 +18,5 @@ interface GamesDao {
     @Query("DELETE FROM games")
     suspend fun deleteAllGames()
 
-    @Query("SELECT EXISTS(SELECT * FROM games)")
-    suspend fun hasItem(): Boolean
 
 }

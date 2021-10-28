@@ -7,4 +7,5 @@
     <string name="followers">"Followers : "</string>
     <string name="rating">"Rating :  "</string>
     <string name="totalRating">"Total Rating : "</string>
+    <string name="internet_message">Check your Internet and refresh the page please</string>
 </resources>

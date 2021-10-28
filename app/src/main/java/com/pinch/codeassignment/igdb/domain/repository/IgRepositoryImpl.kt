@@ -30,9 +30,4 @@ class IgRepositoryImpl @Inject constructor(
         return gamesDao.deleteAllGames()
     }
 
-    override suspend fun hasItemDb(): Boolean {
-        return gamesDao.hasItem()
-    }
-
-
 }

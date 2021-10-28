@@ -15,8 +15,8 @@ fun loadImage(imageView: ImageView, imageUrl: String?) {
 }
 
 /**
- * there is a rule for making an image url witch need to be respected.
- *
+ * There is a rule for making an image url witch need to be respected.
+ *  For more information check this link [https://api-docs.igdb.com/#images]
  */
 fun buildImageUrl(
     imageUrl: String = Constants.IMAGE_URL,
@@ -30,13 +30,12 @@ fun buildImageUrl(
  * Cache handling strategy for api requests
  */
 inline fun <RequestType, ResultType> networkBoundResource(
-    crossinline hasItem: suspend () -> Boolean, // Check if database has any data or not
     crossinline query: () -> Flow<ResultType>,  // Get data from database
     crossinline fetch: suspend () -> RequestType, // Fetch data from server
     crossinline saveFetchedResult: suspend (RequestType) -> Unit, // Save fetched data from server to database
-    crossinline shouldFetch: (Boolean) -> Boolean  // Making decision that if need to fetch data from server or not
+    crossinline shouldFetch: () -> Boolean  // Making decision that if need to fetch data from server or not
 ) = flow {
-    val flow = if (shouldFetch(hasItem())) {
+    val flow = if (shouldFetch()) {
         emit(Resource.Loading())
         try {
             saveFetchedResult(fetch())

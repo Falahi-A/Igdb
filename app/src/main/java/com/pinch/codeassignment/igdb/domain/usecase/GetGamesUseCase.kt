@@ -23,27 +23,29 @@ class GetGamesUseCase @Inject constructor(
 
     operator fun invoke(
         isNetworkAvailable: Boolean
-    ) = networkBoundResource(query = {
-        igRepository.getGamesDb().map {
-            it.map { gameEntity ->
-                gameEntity.toGame()
+    ) = networkBoundResource(
+        query = {   // Fetch data from dataBase
+            igRepository.getGamesDb().map {
+                it.map { gameEntity ->
+                    gameEntity.toGame()
 
+                }
             }
-        }
-    }, fetch = {
-        igRepository.getGames(Constants.GAMES_FIELDS)
-    }, saveFetchedResult = { gamesResponse ->
-        gamesDb.withTransaction {
-            igRepository.deleteGamesDb()
-            igRepository.insertGamesDb(gamesResponse.map { gameNetResponse ->
-                gameNetResponse.toGameEntity()
+        },
+        fetch = { // Fetch data from server
+            igRepository.getGames(Constants.GAMES_FIELDS)
+        },
+        saveFetchedResult = { gamesResponse -> // Delete all previous data from dataBase and insert new data to it
+            gamesDb.withTransaction {
+                igRepository.deleteGamesDb()
+                igRepository.insertGamesDb(gamesResponse.map { gameNetResponse ->
+                    gameNetResponse.toGameEntity()
 
-            })
-        }
-    }, shouldFetch = { hasItem ->
-        isNetworkAvailable || !hasItem
-    }, hasItem = {
-        igRepository.hasItemDb()
-    }).flowOn(dispatcher)
+                })
+            }
+        },
+        shouldFetch = { // If there is an internet connection, data should be fetched from server and be saved to database
+            isNetworkAvailable
+        }).flowOn(dispatcher)
 
 }
