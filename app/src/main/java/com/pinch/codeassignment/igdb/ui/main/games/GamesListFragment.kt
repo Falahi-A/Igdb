@@ -66,7 +66,7 @@ class GamesListFragment : BaseBindingFragment<FragmentGamesListBinding>() {
                     (activity as MainActivity).displayProgress(false)
                     adapter.submitList(viewState.gamesList)
                 }
-                viewState.error == "" && viewState.gamesList.isEmpty() -> {    // Internet is not connected and dataBase has no data.
+               !(activity as MainActivity).isNetworkAvailable() && viewState.error == "" && viewState.gamesList.isEmpty() -> {    // Internet is not connected and dataBase has no data.
                     (activity as MainActivity).displayProgress(false) // Usually this situation happens for first time you install
                     (activity as MainActivity).displayMessage(                    // the app and there is no internet connection.
                         requireContext().getString(R.string.internet_message)
