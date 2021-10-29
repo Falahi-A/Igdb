@@ -1,7 +1,5 @@
 package com.pinch.codeassignment.igdb.domain.usecase
 
-import androidx.room.withTransaction
-import com.pinch.codeassignment.igdb.data.db.GamesDb
 import com.pinch.codeassignment.igdb.data.db.toGame
 import com.pinch.codeassignment.igdb.data.model.toGameEntity
 import com.pinch.codeassignment.igdb.data.repository.IgRepository
@@ -16,7 +14,6 @@ import javax.inject.Named
 
 class GetGamesUseCase @Inject constructor(
     private val igRepository: IgRepository,
-    private val gamesDb: GamesDb,
     @Named(Constants.IO_DISPATCHER) private val dispatcher: CoroutineDispatcher
 ) {
 
@@ -36,13 +33,11 @@ class GetGamesUseCase @Inject constructor(
             igRepository.getGames(Constants.GAMES_FIELDS)
         },
         saveFetchedResult = { gamesResponse -> // Delete all previous data from dataBase and insert new data to it
-            gamesDb.withTransaction {
                 igRepository.deleteGamesDb()
                 igRepository.insertGamesDb(gamesResponse.map { gameNetResponse ->
                     gameNetResponse.toGameEntity()
 
                 })
-            }
         },
         shouldFetch = { // If there is an internet connection, data should be fetched from server and be saved to database
             isNetworkAvailable

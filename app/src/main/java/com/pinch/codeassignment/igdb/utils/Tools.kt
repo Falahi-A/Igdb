@@ -16,7 +16,7 @@ fun loadImage(imageView: ImageView, imageUrl: String?) {
 
 /**
  * There is a rule for making an image url witch need to be respected.
- *  For more information check this link [https://api-docs.igdb.com/#images]
+ *  For more information checkout this link [https://api-docs.igdb.com/#images]
  */
 fun buildImageUrl(
     imageUrl: String = Constants.IMAGE_URL,
